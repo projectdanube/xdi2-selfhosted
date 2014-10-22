@@ -30,7 +30,7 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>file:/etc/xdi2/xdi2.properties</value>
+                <value>file:/etc/xdi2/xdi.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="false" />
@@ -82,10 +82,10 @@
 				<bean class="xdi2.messaging.target.interceptor.impl.authentication.secrettoken.AuthenticationSecretTokenInterceptor">
 					<property name="secretTokenAuthenticator">
 						<bean class="xdi2.messaging.target.interceptor.impl.authentication.secrettoken.StaticSecretTokenAuthenticator">
-							<property name="globalSalt" value="00000000-0000-0000-0000-000000000000" />
+							<property name="globalSalt" value="${secrettokenglobalsalt}" />
 							<property name="localSaltAndDigestSecretTokens">
 								<util:map>
-									<entry key="${cloudnumber}" value="xdi2-digest:ec136367-5969-4e69-9c8a-483e330c317f:8a447e411ad21477b67b8793e5be16749416b996c61a40476c17231be4d9390a8e703b87cf8750b66fb541f208799d3b564ee6ed33cae8f9f84ce39c1527e62e" />
+									<entry key="${cloudnumber}" value="${secrettokendigest}" />
 								</util:map>
 							</property>
 						</bean>
@@ -100,7 +100,7 @@
 				<bean class="xdi2.messaging.target.contributor.impl.keygen.GenerateKeyContributor" />
 				<bean class="xdi2.messaging.target.contributor.impl.connection.ConnectionRequestContributor" />
 				<bean class="xdi2.messaging.target.contributor.impl.connection.InverseOperationContributor">
-					<property name="xdiDiscoveryClient" value="https://xdidiscoveryservice.xdi.net/" />
+					<property name="xdiDiscoveryClient" value="${discoveryservice}" />
 				</bean>
 				<bean class="xdi2.messaging.target.contributor.impl.MessageResultContributor" />
 			</util:list>
