@@ -9,12 +9,14 @@
 
 	<bean id="HttpTransport" class="xdi2.transport.impl.http.HttpTransport" init-method="init" destroy-method="shutdown">
 		<property name="httpMessagingTargetRegistry" ref="HttpMessagingTargetRegistry" />
+		<!-- 
 		<property name="interceptors">
 			<util:list>
 				<bean class="xdi2.transport.impl.http.interceptor.impl.DebugHttpTransportInterceptor" />
 				<bean class="xdi2.transport.impl.http.interceptor.impl.StatusHttpTransportInterceptor" />
 			</util:list>
 		</property>
+		 -->
 	</bean>
 
 	<!-- SPRING -->
