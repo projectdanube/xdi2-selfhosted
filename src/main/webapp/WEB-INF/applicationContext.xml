@@ -9,7 +9,7 @@
 
 	<bean id="HttpTransport" class="xdi2.transport.impl.http.HttpTransport" init-method="init" destroy-method="shutdown">
 		<property name="httpMessagingTargetRegistry" ref="HttpMessagingTargetRegistry" />
-		<!-- 
+		<!-- DISABLED, SINCE THE ADMIN INTERFACE HAS NO SECURITY AT ALL
 		<property name="interceptors">
 			<util:list>
 				<bean class="xdi2.transport.impl.http.interceptor.impl.DebugHttpTransportInterceptor" />

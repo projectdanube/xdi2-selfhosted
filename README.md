@@ -15,13 +15,13 @@ After that, just run
 
     mvn clean install jetty:run
 
-Then access the server's status page at
-
-	http://localhost:9300/
-
-Or use an XDI client to send XDI messages to
+Then use an XDI client to send XDI messages to
 
     http://localhost:9300/graph
+
+Or access the server's status page at
+
+	http://localhost:9300/ (disabled in applicationContext.xml by default)
 
 ### Community
 
