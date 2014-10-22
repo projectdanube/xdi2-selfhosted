@@ -5,7 +5,7 @@ This is a project to configure the [XDI2](http://github.com/projectdanube/xdi2) 
 
 ### Information
 
-TODO
+* [[Configuration]]
 
 ### How to build
 
