@@ -1,7 +1,9 @@
 <a href="http://projectdanube.org/" target="_blank"><img src="http://projectdanube.github.com/xdi2/images/projectdanube_logo.png" align="right"></a>
 <img src="http://projectdanube.github.com/xdi2/images/logo64.png"><br>
 
-This is a project to configure the [XDI2](http://github.com/projectdanube/xdi2) server for self-hosting a single XDI graph.
+This is a configuration profile of the [XDI2](http://github.com/projectdanube/xdi2) server for
+self-hosting a single XDI graph. The configuration should be considered a template and may be
+adjusted according to one's needs.
 
 ### Information
 
