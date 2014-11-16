@@ -6,6 +6,7 @@ This is a project to configure the [XDI2](http://github.com/projectdanube/xdi2) 
 ### Information
 
 * [Configuration](https://github.com/projectdanube/xdi2-selfhosted/wiki/Configuration)
+* [Registration and Discovery](https://github.com/projectdanube/xdi2-selfhosted/wiki/Registration-and-Discovery)
 
 ### How to build
 
