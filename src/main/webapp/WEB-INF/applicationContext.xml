@@ -32,15 +32,14 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>file:/etc/xdi2/xdi.properties</value>
+                <value>file:/etc/xdi2/xdi2-selfhosted.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="false" />
         <property name="ignoreUnresolvablePlaceholders" value="false" />
     </bean>
 
-	<!-- MESSAGING TARGET at / -->
-	<!-- MessagingTarget: GraphMessagingTarget backed by a MemoryGraph -->
+	<!-- MESSAGING TARGET at /graph -->
 
 	<bean id="graphFactory" class="xdi2.core.impl.memory.MemoryGraphFactory">
 	</bean>
@@ -78,7 +77,6 @@
 						</value>
 					</property>
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.VariablesInterceptor" />
 				<bean class="xdi2.messaging.target.interceptor.impl.RefInterceptor" />
 				<bean class="xdi2.messaging.target.interceptor.impl.ToInterceptor" />
 				<bean class="xdi2.messaging.target.interceptor.impl.authentication.secrettoken.AuthenticationSecretTokenInterceptor">
@@ -98,13 +96,14 @@
 		</property>
 		<property name="contributors">
 			<util:list>
-				<bean class="xdi2.messaging.target.contributor.impl.digest.GenerateDigestSecretTokenContributor" />
+				<bean class="xdi2.messaging.target.contributor.impl.digest.GenerateDigestSecretTokenContributor">
+					<property name="globalSalt" value="00000000-0000-0000-0000-000000000000" />
+				</bean>
 				<bean class="xdi2.messaging.target.contributor.impl.keygen.GenerateKeyContributor" />
 				<bean class="xdi2.messaging.target.contributor.impl.connection.ConnectionRequestContributor" />
 				<bean class="xdi2.messaging.target.contributor.impl.connection.InverseOperationContributor">
 					<property name="xdiDiscoveryClient" value="${discoveryservice}" />
 				</bean>
-				<bean class="xdi2.messaging.target.contributor.impl.MessageResultContributor" />
 			</util:list>
 		</property>
 	</bean>
