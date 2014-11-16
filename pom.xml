@@ -21,7 +21,7 @@
 	</distributionManagement>
 
 	<scm>
-		<url>https://github.com/projectdanube/xdi2-mongodb</url>
+		<url>https://github.com/projectdanube/xdi2-selfhosted</url>
 		<connection>scm:git:git://github.com/projectdanube/xdi2-selfhosted.git</connection>
 		<developerConnection>scm:git:git@github.com:projectdanube/xdi2-selfhosted.git</developerConnection>
 	</scm>
