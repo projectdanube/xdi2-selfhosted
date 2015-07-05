@@ -5,7 +5,7 @@
 	<groupId>xdi2</groupId>
 	<artifactId>xdi2-selfhosted</artifactId>
 	<packaging>war</packaging>
-	<version>0.7-SNAPSHOT</version>
+	<version>0.8-SNAPSHOT</version>
 	<name>xdi2-selfhosted</name>
 
 	<issueManagement>
@@ -153,8 +153,8 @@
 
 		<dependency>
 			<groupId>xdi2</groupId>
-			<artifactId>xdi2-transport-http</artifactId>
-			<version>0.7-SNAPSHOT</version>
+			<artifactId>xdi2-server</artifactId>
+			<version>0.8-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 
