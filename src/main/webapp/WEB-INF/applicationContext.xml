@@ -67,12 +67,12 @@
 
 	<!-- MESSAGING TARGET at /graph -->
 
-	<bean id="graphFactory" class="xdi2.core.impl.memory.MemoryGraphFactory">
+	<bean id="graphFactory" class="xdi2.core.impl.wrapped.file.FileWrapperGraphFactory">
+		<property name="path" value="graph.xdi" />
+		<property name="mimeType" value="text/xdi;ordered=1" />
 	</bean>
 
-	<bean id="graph" factory-bean="graphFactory" factory-method="openGraph">
-		<constructor-arg><value>(${cloudnumber})</value></constructor-arg>
-	</bean>
+	<bean id="graph" factory-bean="graphFactory" factory-method="openGraph" />
 
 	<bean name="/graph" class="xdi2.messaging.target.impl.graph.GraphMessagingTarget">
 		<property name="graph" ref="graph" />
@@ -98,8 +98,8 @@
 					</property>
 					<property name="bootstrapMessageEnvelope">
 						<value>
-							($anon[$msg]!1$do/$do$keypair){$self}$msg$encrypt$keypair/$is#/$rsa$2048
-							($anon[$msg]!1$do/$do$keypair){$self}$msg$sig$keypair/$is#/$rsa$2048
+							($anon[$msg]*!1$do/$do$keypair){$self}$msg$encrypt$keypair/$is#/$rsa$2048
+							($anon[$msg]*!1$do/$do$keypair){$self}$msg$sig$keypair/$is#/$rsa$2048
 						</value>
 					</property>
 				</bean>
@@ -130,7 +130,7 @@
 		<property name="contributors">
 			<util:list>
 				<bean class="xdi2.messaging.target.contributor.impl.digest.GenerateDigestSecretTokenContributor">
-					<property name="globalSalt" value="00000000-0000-0000-0000-000000000000" />
+					<property name="globalSalt" value="${secrettokenglobalsalt}" />
 				</bean>
 				<bean class="xdi2.messaging.target.contributor.impl.keygen.GenerateKeyContributor" />
 				<bean class="xdi2.messaging.target.contributor.impl.connection.ConnectionRequestContributor" />
