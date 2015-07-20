@@ -133,7 +133,6 @@
 					<property name="globalSalt" value="${secrettokenglobalsalt}" />
 				</bean>
 				<bean class="xdi2.messaging.target.contributor.impl.keygen.GenerateKeyContributor" />
-				<bean class="xdi2.messaging.target.contributor.impl.connection.ConnectionRequestContributor" />
 				<bean class="xdi2.messaging.target.contributor.impl.connection.ConnectionRequestContributor">
 					<property name="xdiAgent" ref="XdiAgent" />
 				</bean>
