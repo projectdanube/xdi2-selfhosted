@@ -135,15 +135,37 @@
 				<bean class="xdi2.messaging.target.interceptor.impl.linkcontract.LinkContractInterceptor" />
 				<bean class="xdi2.messaging.target.interceptor.impl.signing.SigningInterceptor">
 					<property name="signatureCreator">
-						<bean class="xdi2.core.security.signature.RSAGraphPrivateKeySignatureCreator" />
+						<bean class="xdi2.core.security.signature.create.RSAGraphPrivateKeySignatureCreator" />
 					</property>
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.connect.ConnectInterceptor">
-					<property name="xdiAgent" ref="XdiAgent" />
-				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.send.SendInterceptor">
-					<property name="xdiAgent" ref="XdiAgent" />
-				</bean>
+                                <bean class="xdi2.messaging.target.interceptor.impl.connect.ConnectInterceptor">
+                                        <property name="xdiAgent" ref="XdiAgent" />
+                                        <property name="manipulators">
+                                                <util:list>
+                                                        <bean class="xdi2.client.manipulator.impl.signing.SigningManipulator">
+                                                                <property name="signatureCreator">
+                                                                        <bean class="xdi2.core.security.signature.create.RSAGraphPrivateKeySignatureCreator">
+                                                                                <property name="privateKeyGraph" ref="graph" />
+                                                                        </bean>
+                                                                </property>
+                                                        </bean>
+                                                </util:list>
+                                        </property>
+                                </bean>
+                                <bean class="xdi2.messaging.target.interceptor.impl.send.SendInterceptor">
+                                        <property name="xdiAgent" ref="XdiAgent" />
+                                        <property name="manipulators">
+                                                <util:list>
+                                                        <bean class="xdi2.client.manipulator.impl.signing.SigningManipulator">
+                                                                <property name="signatureCreator">
+                                                                        <bean class="xdi2.core.security.signature.create.RSAGraphPrivateKeySignatureCreator">
+                                                                                <property name="privateKeyGraph" ref="graph" />
+                                                                        </bean>
+                                                                </property>
+                                                        </bean>
+                                                </util:list>
+                                        </property>
+                                </bean>
 				<bean class="xdi2.messaging.target.interceptor.impl.push.PushInInterceptor" />
 				<bean class="xdi2.messaging.target.interceptor.impl.push.PushOutInterceptor">
 					<property name="pushGateway">
@@ -152,7 +174,15 @@
 						</bean>
 					</property>
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.push.PushResultInterceptor" />
+                               <bean class="xdi2.messaging.target.interceptor.impl.push.PushInInterceptor" />
+                                <bean class="xdi2.messaging.target.interceptor.impl.push.PushOutInterceptor">
+                                        <property name="pushGateway">
+                                                <bean class="xdi2.messaging.target.interceptor.impl.push.BasicPushGateway">
+                                                        <property name="xdiAgent" ref="XdiAgent" />
+                                                </bean>
+                                        </property>
+                                </bean>
+                                <bean class="xdi2.messaging.target.interceptor.impl.hold.HoldResultInterceptor" />
 			</util:list>
 		</property>
 		<property name="contributors">
