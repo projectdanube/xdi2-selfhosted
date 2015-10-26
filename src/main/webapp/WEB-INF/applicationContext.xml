@@ -111,9 +111,9 @@
 				</bean>
 				<bean class="xdi2.messaging.target.interceptor.impl.ToInterceptor" />
 				<bean class="xdi2.messaging.target.interceptor.impl.RefInterceptor" />
-				<bean class="xdi2.messaging.target.interceptor.impl.authentication.secrettoken.AuthenticationSecretTokenInterceptor">
-					<property name="secretTokenAuthenticator">
-						<bean class="xdi2.messaging.target.interceptor.impl.authentication.secrettoken.StaticSecretTokenAuthenticator">
+                                <bean class="xdi2.messaging.target.interceptor.impl.security.secrettoken.SecretTokenInterceptor">
+                                        <property name="secretTokenValidator">
+						<bean class="xdi2.messaging.target.interceptor.impl.security.secrettoken.StaticSecretTokenValidator">
 							<property name="globalSalt" value="${secrettokenglobalsalt}" />
 							<property name="localSaltAndDigestSecretTokens">
 								<util:map>
@@ -123,15 +123,15 @@
 						</bean>
 					</property>
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.authentication.signature.AuthenticationSignatureInterceptor">
-					<property name="signatureValidators">
-						<util:list>
-							<bean class="xdi2.core.security.validate.RSADiscoveryPublicKeySignatureValidator">
-								<property name="xdiDiscoveryClient" ref="XdiDiscoveryClient" />
-							</bean>
-						</util:list>
-					</property>
-				</bean>
+                                <bean class="xdi2.messaging.target.interceptor.impl.security.signature.SignatureInterceptor">
+                                        <property name="signatureValidators">
+                                                <util:list>
+                                                        <bean class="xdi2.core.security.signature.validate.RSADiscoveryPublicKeySignatureValidator">
+                                                                <property name="xdiDiscoveryClient" ref="XdiDiscoveryClient" />
+                                                        </bean>
+                                                </util:list>
+                                        </property>
+                                </bean>
 				<bean class="xdi2.messaging.target.interceptor.impl.linkcontract.LinkContractInterceptor" />
 				<bean class="xdi2.messaging.target.interceptor.impl.signing.SigningInterceptor">
 					<property name="signatureCreator">
