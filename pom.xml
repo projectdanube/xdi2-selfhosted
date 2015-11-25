@@ -52,7 +52,7 @@
 					<jettyEnvXml>
 						${basedir}/src/test/resources/jetty-env.xml
 					</jettyEnvXml>
-					<contextPath>/</contextPath>
+					<webApp><contextPath>/xdi</contextPath></webApp>
 					<useTestClasspath>true</useTestClasspath>
 					<systemProperties>
 						<systemProperty>
