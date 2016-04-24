@@ -133,8 +133,9 @@
 				<bean class="xdi2.messaging.target.interceptor.impl.security.signature.SignatureInterceptor">
 					<property name="signatureValidators">
 						<util:list>
-							<bean class="xdi2.core.security.signature.validate.RSADiscoveryPublicKeySignatureValidator">
-								<property name="xdiDiscoveryClient" ref="XdiDiscoveryClient" />
+							<bean class="xdi2.core.security.ec25519.signature.validate.EC25519CloudNumberPublicKeySignatureValidator" />
+							<bean class="xdi2.core.security.signature.validate.RSAAgentPublicKeySignatureValidator">
+								<property name="xdiAgent" ref="XdiAgent" />
 							</bean>
 						</util:list>
 					</property>
