@@ -65,7 +65,7 @@
 					<jettyEnvXml>
 						${basedir}/src/test/resources/jetty-env.xml
 					</jettyEnvXml>
-					<contextPath>/</contextPath>
+					<webApp><contextPath>/xdi</contextPath></webApp>
 					<useTestClasspath>true</useTestClasspath>
 					<systemProperties>
 						<systemProperty>
@@ -118,6 +118,12 @@
 		<dependency>
 			<groupId>xdi2</groupId>
 			<artifactId>xdi2-server</artifactId>
+			<version>0.8-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>xdi2</groupId>
+			<artifactId>xdi2-crypto-ec25519</artifactId>
 			<version>0.8-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
