@@ -44,6 +44,28 @@
         <property name="ignoreUnresolvablePlaceholders" value="false" />
     </bean>
 
+	<!-- MEECO CONNECTOR -->
+
+	<bean id="meecoContributor" class="xdi2.connector.meeco.contributor.MeecoContributor">
+		<property name="meecoApi" ref="meecoApi" />
+		<property name="meecoMapping" ref="meecoMapping" />
+	</bean>
+
+	<bean id="meecoApi" class="xdi2.connector.meeco.api.MeecoApi" init-method="init" destroy-method="destroy" />
+
+	<bean id="meecoMapping" class="xdi2.connector.meeco.mapping.MeecoMapping" />
+
+	<!-- COZY CONNECTOR -->
+
+	<bean id="cozyContributor" class="xdi2.connector.cozy.contributor.CozyContributor">
+		<property name="cozyApi" ref="cozyApi" />
+		<property name="cozyMapping" ref="cozyMapping" />
+	</bean>
+
+	<bean id="cozyApi" class="xdi2.connector.cozy.api.CozyApi" init-method="init" destroy-method="destroy" />
+
+	<bean id="cozyMapping" class="xdi2.connector.cozy.mapping.CozyMapping" />
+
 	<!-- XDI DISCOVERY CLIENT AND AGENT -->
 
 	<bean id="XdiDiscoveryClient" class="xdi2.discovery.XDIDiscoveryClient">
@@ -199,10 +221,14 @@
 					</property>
 				</bean>
 				<bean class="xdi2.messaging.target.interceptor.impl.defer.DeferResultInterceptor" />
+				<ref bean="meecoContributor" />
+				<ref bean="cozyContributor" />
 			</util:list>
 		</property>
 		<property name="contributors">
 			<util:list>
+				<ref bean="meecoContributor" />
+				<ref bean="cozyContributor" />
 				<bean class="xdi2.messaging.target.contributor.impl.digest.GenerateDigestSecretTokenContributor">
 					<property name="globalSalt" value="${secrettokenglobalsalt}" />
 				</bean>
