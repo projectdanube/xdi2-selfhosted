@@ -212,14 +212,6 @@
 						</bean>
 					</property>
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.push.PushInInterceptor" />
-				<bean class="xdi2.messaging.target.interceptor.impl.push.PushOutInterceptor">
-					<property name="pushGateway">
-						<bean class="xdi2.messaging.target.interceptor.impl.push.BasicPushGateway">
-							<property name="xdiAgent" ref="XdiAgent" />
-						</bean>
-					</property>
-				</bean>
 				<bean class="xdi2.messaging.target.interceptor.impl.defer.DeferResultInterceptor" />
 				<ref bean="meecoContributor" />
 				<ref bean="cozyContributor" />
