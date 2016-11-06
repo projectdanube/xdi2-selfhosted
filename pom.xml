@@ -57,7 +57,7 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.3.0.M1</version>
+				<version>9.4.0.M1</version>
 				<configuration>
 					<jettyConfig>
 						${basedir}/src/test/resources/jetty.xml
@@ -104,7 +104,7 @@
 					<dependency>
 						<groupId>org.eclipse.jetty.websocket</groupId>
 						<artifactId>websocket-server</artifactId>
-						<version>9.3.0.M1</version>
+						<version>9.4.0.M1</version>
 						<scope>compile</scope>
 					</dependency>
 				</dependencies>
