@@ -5,12 +5,12 @@
 
 	<!-- XDI ENDPOINT REGISTRY AND TRANSPORT -->
 
-	<bean id="UriMessagingTargetRegistry" class="xdi2.transport.registry.impl.uri.UriMessagingTargetRegistry" init-method="init" destroy-method="shutdown" />
+	<bean id="UriMessagingContainerRegistry" class="xdi2.transport.registry.impl.uri.UriMessagingContainerRegistry" init-method="init" destroy-method="shutdown" />
 
 	<bean id="DebugHttpTransportInterceptor" class="xdi2.transport.impl.http.interceptor.impl.DebugHttpTransportInterceptor" />
 
 	<bean id="HttpTransport" class="xdi2.transport.impl.http.HttpTransport" init-method="init" destroy-method="shutdown">
-		<property name="uriMessagingTargetRegistry" ref="UriMessagingTargetRegistry" />
+		<property name="uriMessagingContainerRegistry" ref="UriMessagingContainerRegistry" />
 		<property name="interceptors">
 			<util:list>
 				<ref bean="DebugHttpTransportInterceptor" />
@@ -19,7 +19,7 @@
 	</bean>
 
 	<bean id="WebSocketTransport" class="xdi2.transport.impl.websocket.WebSocketTransport" init-method="init" destroy-method="shutdown">
-		<property name="uriMessagingTargetRegistry" ref="UriMessagingTargetRegistry" />
+		<property name="uriMessagingContainerRegistry" ref="UriMessagingContainerRegistry" />
 		<property name="endpointPath" value="/" />
 	</bean>
 
@@ -76,8 +76,8 @@
 		<property name="agentRouters">
 			<list>
 				<bean class="xdi2.agent.routing.impl.bootstrap.XDIBootstrapLocalAgentRouter" />
-				<bean class="xdi2.agent.routing.impl.local.XDIMessagingTargetRegistryAgentRouter">
-					<property name="messagingTargetRegistry" ref="UriMessagingTargetRegistry" />
+				<bean class="xdi2.agent.routing.impl.local.XDIMessagingContainerRegistryAgentRouter">
+					<property name="messagingContainerRegistry" ref="UriMessagingContainerRegistry" />
 					<property name="interceptors">
 						<util:list>
 							<ref bean="DebugHttpTransportInterceptor" />
@@ -103,11 +103,11 @@
 
 	<bean id="graph" factory-bean="graphFactory" factory-method="openGraph" />
 
-	<bean name="/graph" class="xdi2.messaging.target.impl.graph.GraphMessagingTarget">
+	<bean name="/graph" class="xdi2.messaging.container.impl.graph.GraphMessagingContainer">
 		<property name="graph" ref="graph" />
 		<property name="interceptors">
 			<util:list>
-				<bean class="xdi2.messaging.target.interceptor.impl.BootstrapInterceptor">
+				<bean class="xdi2.messaging.container.interceptor.impl.BootstrapInterceptor">
 					<property name="bootstrapOwner" value="${cloudnumber}" />
 					<property name="bootstrapOwnerSynonyms">
 						<util:list>
@@ -138,11 +138,11 @@
 						</value>
 					</property>
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.ToInterceptor" />
-				<bean class="xdi2.messaging.target.interceptor.impl.RefInterceptor" />
-				<bean class="xdi2.messaging.target.interceptor.impl.security.secrettoken.SecretTokenInterceptor">
+				<bean class="xdi2.messaging.container.interceptor.impl.ToInterceptor" />
+				<bean class="xdi2.messaging.container.interceptor.impl.RefInterceptor" />
+				<bean class="xdi2.messaging.container.interceptor.impl.security.secrettoken.SecretTokenInterceptor">
 					<property name="secretTokenValidator">
-						<bean class="xdi2.messaging.target.interceptor.impl.security.secrettoken.StaticSecretTokenValidator">
+						<bean class="xdi2.messaging.container.interceptor.impl.security.secrettoken.StaticSecretTokenValidator">
 							<property name="globalSalt" value="${secrettokenglobalsalt}" />
 							<property name="localSaltAndDigestSecretTokens">
 								<util:map>
@@ -152,7 +152,7 @@
 						</bean>
 					</property>
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.security.signature.SignatureInterceptor">
+				<bean class="xdi2.messaging.container.interceptor.impl.security.signature.SignatureInterceptor">
 					<property name="signatureValidators">
 						<util:list>
 							<bean class="xdi2.core.security.ec25519.signature.validate.EC25519CloudNumberPublicKeySignatureValidator" />
@@ -162,7 +162,7 @@
 						</util:list>
 					</property>
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.security.digest.DigestInterceptor">
+				<bean class="xdi2.messaging.container.interceptor.impl.security.digest.DigestInterceptor">
 					<property name="digestValidators">
 						<util:list>
 							<bean class="xdi2.core.security.digest.validate.SHABasicDigestValidator" />
@@ -170,13 +170,13 @@
 						</util:list>
 					</property>
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.linkcontract.LinkContractInterceptor" />
-				<bean class="xdi2.messaging.target.interceptor.impl.signing.SigningInterceptor">
+				<bean class="xdi2.messaging.container.interceptor.impl.linkcontract.LinkContractInterceptor" />
+				<bean class="xdi2.messaging.container.interceptor.impl.signing.SigningInterceptor">
 					<property name="signatureCreator">
 						<bean class="xdi2.core.security.signature.create.RSAGraphPrivateKeySignatureCreator" />
 					</property>
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.connect.ConnectInterceptor">
+				<bean class="xdi2.messaging.container.interceptor.impl.connect.ConnectInterceptor">
 					<property name="xdiAgent" ref="XdiAgent" />
 					<property name="manipulators">
 						<util:list>
@@ -190,7 +190,7 @@
 						</util:list>
 					</property>
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.send.SendInterceptor">
+				<bean class="xdi2.messaging.container.interceptor.impl.send.SendInterceptor">
 					<property name="xdiAgent" ref="XdiAgent" />
 					<property name="manipulators">
 						<util:list>
@@ -204,15 +204,15 @@
 						</util:list>
 					</property>
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.push.PushInInterceptor" />
-				<bean class="xdi2.messaging.target.interceptor.impl.push.PushOutInterceptor">
+				<bean class="xdi2.messaging.container.interceptor.impl.push.PushInInterceptor" />
+				<bean class="xdi2.messaging.container.interceptor.impl.push.PushOutInterceptor">
 					<property name="pushGateway">
-						<bean class="xdi2.messaging.target.interceptor.impl.push.BasicPushGateway">
+						<bean class="xdi2.messaging.container.interceptor.impl.push.BasicPushGateway">
 							<property name="xdiAgent" ref="XdiAgent" />
 						</bean>
 					</property>
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.defer.DeferResultInterceptor" />
+				<bean class="xdi2.messaging.container.interceptor.impl.defer.DeferResultInterceptor" />
 				<ref bean="meecoContributor" />
 				<ref bean="cozyContributor" />
 			</util:list>
@@ -221,10 +221,10 @@
 			<util:list>
 				<ref bean="meecoContributor" />
 				<ref bean="cozyContributor" />
-				<bean class="xdi2.messaging.target.contributor.impl.digest.GenerateDigestSecretTokenContributor">
+				<bean class="xdi2.messaging.container.contributor.impl.digest.GenerateDigestSecretTokenContributor">
 					<property name="globalSalt" value="${secrettokenglobalsalt}" />
 				</bean>
-				<bean class="xdi2.messaging.target.contributor.impl.keygen.GenerateKeyContributor">
+				<bean class="xdi2.messaging.container.contributor.impl.keygen.GenerateKeyContributor">
 					<property name="targetGraph" ref="graph" />
 				</bean>
 			</util:list>
